@@ -2,14 +2,11 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 
 import './App.css';
-import { TheatersRounded } from '@material-ui/icons';
-
-import {makeStyles} from '@material-ui/core/styles';
-import {Modal, Button, TextField} from '@material-ui/core';
-import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid } from '@mui/x-data-grid';
 import {Edit, Delete} from '@material-ui/icons';
 
-const apiUrl = `https://pokeapi.co/api/v2/pokemon/?limit=151`;
+const apiUrl = `https://pokeapi.co/api/v2/pokemon/?limit=50`;
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -36,6 +33,12 @@ function App() {
   
   const [modalAdd, setModalAdd] = useState(false);
 
+  const pokedexColumns = [
+    { field: 'id', headerName: '#', width: 10 },
+    { field: 'name', headerName: 'Pokemon Name', width: 50 },
+    { field: 'type1', headerName: 'Type 1', width: 50 },
+  ];
+
   const request = async() => {
     await axios
       .get(apiUrl)
@@ -52,38 +55,13 @@ function App() {
 
   return (
     <div className="App">
-      <Button>Add</Button>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Type 1</TableCell>
-              <TableCell>Type 2</TableCell>
-              <TableCell>Generation</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map(pokemon=>(
-              <TableRow key={pokemon.id}>
-                <TableCell></TableCell>
-                <TableCell>{pokemon.name}</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell>
-                  <Edit/>
-                  <Delete/>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <Modal> </Modal>
+    <DataGrid
+      rows={data.results}
+      columns={pokedexColumns}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
+      checkboxSelection
+    />
     </div>
   );
 }
