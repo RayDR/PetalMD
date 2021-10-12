@@ -2,7 +2,6 @@ module Api
    module V1
       class PokemonsController < ApplicationController
          skip_before_action :verify_authenticity_token
-         #before_action :authenticate, except: [ :index, :show ]         
 
          # Pokedex
          def index
@@ -81,13 +80,6 @@ module Api
          private 
          def pokemonData
             params.permit(:name, :type1, :type2, :total, :hp, :attack, :defense, :spatk, :spdef, :speed, :generation, :legendary)
-         end
-
-         # For authentication - not provided
-         def authenticate
-            authenticate_or_request_with_http_token do |token, options|
-               User.find_by_id(token: token)
-            end
          end
 
       end
