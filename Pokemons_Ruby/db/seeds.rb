@@ -20,6 +20,7 @@ def load_file(fileName)
 	end
  
 	puts "\nUploaded data from: #{fileName} :)\n"
+	puts "Now you can run the application with: rails server"
 end
 
 def display_error(e, row, line)
