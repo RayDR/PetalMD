@@ -9,4 +9,6 @@ class Pokemon < ApplicationRecord
     validates :spatk, numericality: true
     validates :spdef, numericality: true
     validates :speed, numericality: true
+
+    validates :legendary, numericality: true, length: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 1}, 
 end
