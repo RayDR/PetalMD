@@ -1,7 +1,29 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'csv'
+ 
+def load_file(fileName)
+	csvLine  = 2
+
+	csvFile 	= File.read(Rails.root.join('lib', 'seeds', "#{fileName}.csv"))
+	csvData 	= CSV.parse(csvFile, headers: true)
+ 
+	puts "\nPreparing data from: #{fileName}.\n"
+ 
+	csvData.each do |row|
+	  	begin
+			Pokemon.create!(row.to_hash)
+			puts "Pokemon #{row['id']}: #{row['name']} saved."
+	  	rescue StandardError => e
+		 	display_error(e, row, csvLine)
+	  	end
+ 
+	  	csvLine += 1
+	end
+ 
+	puts "\nUploaded data from: #{fileName} :)\n"
+end
+
+def display_error(e, row, line)
+	puts "\nError ocurred: #{e} on line #{line} on (#{row.to_hash})\n"
+end
+
+load_file('pokemon')

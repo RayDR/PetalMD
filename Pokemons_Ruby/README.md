@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+Raymundo Dominguez Ruiz
+Technical Test for PetalMD using Ruby
 
 * Ruby version
+    ruby 3.0.2p107
 
 * System dependencies
+    gem 'sqlite3', '~> 1.4'
+    gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 
 * Configuration
-
-* Database creation
-
-* Database initialization
+    1. rails/rake db:create
+    2. rails/rake db:migrate
+    3. rails/rake db:seed
+    4. rails server
 
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* API URL
+    http://localhost:3000/api/v1/pokemons/
